@@ -1,4 +1,14 @@
-#----------------------------------------
+import sys
+def one(n, n3 = None):
+    b = 'B'
+    g = 'G'
+    r = 'R'
+    x = 'X'
+    s = ' '
+
+    if n == None:
+        n3 = n
+
     if n == 1:
         l1a = [g, x]
         l2a = [g, g]
@@ -32,3 +42,14 @@
         return l5b
             
     elif n >= 3:
+        #
+        #
+        #
+        #
+        #
+        #
+        return ...
+
+if __name__ == "__main__":
+    n = int(sys.argv[1])
+    one(n)
