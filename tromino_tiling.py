@@ -11,8 +11,8 @@ def tromino(n, n1=None):
         l1a = [colors['G'], colors['X']]
         l2a = [colors['G'], colors['G']]
         grid = [l1a, l2a]
-        for line in grid:
-            print(separator.join(line))
+        for l in grid:
+            print(separator.join(l))
                 
     elif n == 2:
         l1b = [colors['B'], colors['B'], colors['R'], colors['R']]
@@ -22,63 +22,59 @@ def tromino(n, n1=None):
         grid = [l1b, l2b, l3b, l4b]
 
         if n1 == n:
-            for line in grid:
-                print(separator.join(line))
+            for l in grid:
+                print(separator.join(l))
         return grid
             
     elif n >= 3:
         table1 = [[' '] * (2 ** n) for _ in range(2 ** n)]
 
-        line = tromino(n - 1, n1)
+        l = tromino(n - 1, n1)
 
         table2 = [[' '] * (2 ** n) for _ in range(2 ** n)]
 
-        for i in range(2 ** (n - 1)):
-            for j in range(2 ** (n - 1)):
-                if line[i][j] == colors['B']:
-                    table2[i][j] = colors['R']
-                elif line[i][j] == colors['R']:
-                    table2[i][j] = colors['B']
+        for a in range(2 ** (n - 1)):
+            for b in range(2 ** (n - 1)):
+                if l[a][b] == colors['B']:
+                    table2[a][b] = colors['R']
+                elif l[a][b] == colors['R']:
+                    table2[a][b] = colors['B']
                 else:
-                    table2[i][j] = line[i][j]
+                    table2[a][b] = l[a][b]
 
-        for i in range(2 ** (n - 1)):
-            for j in range(2 ** (n - 1)):
-                table1[i][j] = line[i][j]
+        for a in range(2 ** (n - 1)):
+            for b in range(2 ** (n - 1)):
+                table1[a][b] = l[a][b]
 
-        for i in range(2 ** (n - 1)):
-            for j in range(2 ** (n - 1)):
-                table1[2 * (2 ** (n - 1)) - 1 - j][i] = table2[i][j]
+        for a in range(2 ** (n - 1)):
+            for b in range(2 ** (n - 1)):
+                table1[2 * (2 ** (n - 1)) - 1 - b][a] = table2[a][b]
 
-        for i in range(2 ** (n - 1)):
-            for j in range(2 ** (n - 1)):
-                table1[2 * (2 ** (n - 1)) - 1 - j][2 * (2 ** (n - 1)) - 1 - i] = line[i][j]
+        for a in range(2 ** (n - 1)):
+            for b in range(2 ** (n - 1)):
+                table1[2 * (2 ** (n - 1)) - 1 - b][2 * (2 ** (n - 1)) - 1 - a] = l[a][b]
 
-        for i in range(2 ** (n - 1)):
-            for j in range(2 ** (n - 1)):
-                table1[j][2 * (2 ** (n - 1)) - 1 - i] = table2[i][j]
+        for a in range(2 ** (n - 1)):
+            for b in range(2 ** (n - 1)):
+                table1[b][2 * (2 ** (n - 1)) - 1 - a] = table2[a][b]
 
         table1[(2 ** n) // 2][(2 ** n) // 2] = table1[((2 ** n) // 2) - 1][(2 ** n) // 2] = table1[(2 ** n) // 2][((2 ** n) // 2) - 1] = colors['G']
 
         if n1 != n:
-            for i in range(2 ** (n - 1)):
-                for j in range(2 ** (n - 1)):
-                    table1[j + 2 ** (n - 1)][i + 2 ** (n - 1)] = line[i][j]
+            for a in range(2 ** (n - 1)):
+                for b in range(2 ** (n - 1)):
+                    table1[b + 2 ** (n - 1)][a + 2 ** (n - 1)] = l[a][b]
         
             table1[(2 ** n) // 2 - 1][(2 ** n) // 2 - 1] = table1[((2 ** n) // 2) - 1][(2 ** n) // 2] = table1[(2 ** n) // 2][((2 ** n) // 2) - 1] = colors['G']
 
         table2 = table1
 
         if n1 == n:
-            for line in table2:
-                print(separator.join(line))
+            for l in table2:
+                print(separator.join(l))
 
         return table2
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python tromino_tiling.py n")
-        sys.exit(1)
-
     n = int(sys.argv[1])
     tromino(n)
